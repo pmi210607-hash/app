@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b2b5b" />
+    <title>SafeDream AI 카메라</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="app-header">
+        <div>
+          <p class="eyebrow">SAFE SLEEP MONITOR</p>
+          <h1>SafeDream AI</h1>
+        </div>
+        <div id="cameraBadge" class="status-badge" data-state="off">
+          <span class="status-dot"></span>
+          <span id="cameraBadgeText">카메라 꺼짐</span>
+        </div>
+      </header>
+
+      <section class="monitor-card" aria-label="실시간 수면 관찰">
+        <div class="video-frame">
+          <video id="cameraVideo" autoplay playsinline muted></video>
+          <canvas id="poseCanvas" aria-label="AI가 감지한 신체 관절점"></canvas>
+          <canvas id="snapshotCanvas" hidden></canvas>
+          <div id="emptyState" class="empty-state">
+            <div class="camera-icon" aria-hidden="true">◉</div>
+            <strong>카메라를 시작해 주세요</strong>
+            <span>브라우저에서 카메라 사용을 허용하면 실시간 화면이 나타납니다.</span>
+          </div>
+          <div class="live-indicator" id="liveIndicator" hidden>
+            <span></span> LIVE
+          </div>
+        </div>
+
+        <div class="status-panel">
+          <div>
+            <span class="label">현재 상태</span>
+            <strong id="monitorStatus">관찰 대기 중</strong>
+          </div>
+          <div>
+            <span class="label">관찰 시간</span>
+            <strong id="elapsedTime">00:00:00</strong>
+          </div>
+          <div>
+            <span class="label">촬영 방향</span>
+            <strong id="facingText">후면 카메라</strong>
+          </div>
+          <div>
+            <span class="label">AI 자세 인식</span>
+            <strong id="poseStatus">모델 준비 전</strong>
+          </div>
+        </div>
+
+        <div class="controls">
+          <button id="startButton" class="button button-primary" type="button">카메라 시작</button>
+          <button id="stopButton" class="button" type="button" disabled>카메라 종료</button>
+          <button id="switchButton" class="button" type="button" disabled>카메라 전환</button>
+          <button id="captureButton" class="button" type="button" disabled>화면 캡처</button>
+        </div>
+
+        <p id="message" class="message" role="status" aria-live="polite">
+          카메라는 서버로 전송되지 않고 현재 브라우저 화면에만 표시됩니다.
+        </p>
+      </section>
+
+      <section id="captureSection" class="capture-card" hidden>
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">CAPTURE</p>
+            <h2>캡처 이미지</h2>
+          </div>
+          <a id="downloadLink" class="button button-small" download="safedream-capture.png">이미지 저장</a>
+        </div>
+        <img id="capturePreview" alt="카메라에서 캡처한 이미지" />
+      </section>
+
+      <aside class="notice">
+        <strong>안내</strong>
+        <p>이 예제는 카메라 작동을 확인하기 위한 초기 웹앱입니다. 발작을 진단하거나 의료적 판단을 제공하지 않습니다.</p>
+      </aside>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
